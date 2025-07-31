@@ -1,33 +1,17 @@
+
 import streamlit as st
-import psycopg2
 import pandas as pd
 import plotly.express as px
 
-# Database connection parameters read from Streamlit secrets
-DB_USER = st.secrets["DB_USER"]
-DB_PASS = st.secrets["DB_PASS"]
-DB_HOST = st.secrets["DB_HOST"]
-DB_PORT = st.secrets["DB_PORT"]
-DB_NAME = st.secrets["DB_NAME"]
-
+# Remove DB secrets — not needed anymore
+# Load data from CSV instead of database
 @st.cache_data
 def get_data():
-    conn = psycopg2.connect(
-        host=DB_HOST,
-        dbname=DB_NAME,
-        user=DB_USER,
-        password=DB_PASS,
-        port=DB_PORT
-    )
-    query = """
-    SELECT year_month, representation_status, claims_volume, settlement_volume, total_settlement_value, avg_claim_per_settlement
-    FROM view_oic_monthly_summary
-    ORDER BY year_month;
-    """
-    df = pd.read_sql(query, conn)
-    conn.close()
+    df = pd.read_csv("assets/oic_dashboard.csv")
     df['year_month'] = pd.to_datetime(df['year_month'])
     return df
+
+
 
 # Reduce horizontal whitespace
 st.markdown("""
