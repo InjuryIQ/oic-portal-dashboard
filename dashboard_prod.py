@@ -1,17 +1,13 @@
-
 import streamlit as st
 import pandas as pd
 import plotly.express as px
 
-# Remove DB secrets — not needed anymore
 # Load data from CSV instead of database
 @st.cache_data
 def get_data():
     df = pd.read_csv("assets/oic_dashboard.csv")
     df['year_month'] = pd.to_datetime(df['year_month'])
     return df
-
-
 
 # Reduce horizontal whitespace
 st.markdown("""
@@ -140,13 +136,8 @@ else:
     )
     plot_df = agg_df.copy()
 
-# Summary metrics
-st.markdown(
-    """
-    <div style="position: sticky; top: 90px; background-color: white; z-index: 99; padding-top: 10px; padding-bottom: 10px; border-bottom: 1px solid #eee;">
-    """,
-    unsafe_allow_html=True
-)
+# --- Updated summary section (no raw div wrappers) ---
+
 st.subheader("Summary")
 
 total_claims = filtered_df['claims_volume'].sum()
@@ -165,7 +156,6 @@ with col3:
     st.metric("Total Settlement Value", f"£{total_settlement_value:,.0f}")
 with col4:
     st.metric("Average Settlement Amount", f"£{avg_settlement_amount:,.2f}")
-st.markdown("</div>", unsafe_allow_html=True)
 
 # Function to plot multi-line chart using Plotly Express
 def plot_multiline(df, y_col, title):
