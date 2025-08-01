@@ -187,7 +187,7 @@ def home_page():
 # --- NewClaim Analysis Page ---
 def new_claim_analysis_page():
     df = get_data()
-    render_header("NewClaim Analysis")
+    render_header("New Claim Analysis")
     # CSS for dropdown sizing
     st.markdown(
         """
@@ -379,10 +379,10 @@ def settlement_analysis_page():
             st.plotly_chart(fig_avg, use_container_width=True)
 
 # --- App Navigation ---
-page = st.sidebar.radio("Select Page", ["Home", "NewClaim Analysis", "Settlement Analysis"])
+page = st.sidebar.radio("Select Page", ["Home", "New Claim Analysis", "Settlement Analysis"])
 if page == "Home":
     home_page()
-elif page == "NewClaim Analysis":
+elif page == "New Claim Analysis":
     new_claim_analysis_page()
 else:
     settlement_analysis_page()
