@@ -2,6 +2,19 @@ import streamlit as st
 import pandas as pd
 import plotly.express as px
 
+# Force light theme
+st.markdown(
+    """
+    <style>
+        body {
+            color: #000000;
+            background-color: #ffffff;
+        }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
+
 # Load data from CSV (cached)
 @st.cache_data
 def get_data():
