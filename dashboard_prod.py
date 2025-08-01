@@ -76,7 +76,7 @@ def filters_ui(df):
     end_date = pd.to_datetime(selected_date[1]).to_period('M').to_timestamp()
     return selected_rep, combined, start_date, end_date
 
-# Multi-line plot helper
+# Multi-line plot helper with responsive horizontal legend
 def plot_multiline(df, y_col, title, start_date, end_date):
     fig = px.line(
         df,
@@ -86,7 +86,21 @@ def plot_multiline(df, y_col, title, start_date, end_date):
         title=title,
         labels={'year_month': 'Date', y_col: title}
     )
-    fig.update_layout(legend_title_text='Representation Status')
+    fig.update_layout(
+        legend_title_text='Representation Status',
+        legend=dict(
+            orientation="h",
+            yanchor="bottom",
+            y=1.02,
+            xanchor="center",
+            x=0.5,
+            font=dict(size=8),
+            bgcolor='rgba(255,255,255,0.7)',
+            bordercolor='LightGray',
+            borderwidth=1,
+        ),
+        margin=dict(t=40, b=40, l=40, r=40)
+    )
     fig.update_xaxes(range=[start_date, end_date], constrain='domain')
     for trace in fig.data:
         trace.hovertemplate = '%{y:,.0f}<extra></extra>'
@@ -213,7 +227,23 @@ def new_claim_analysis_page():
         )
         all_months = pd.date_range(start=start_date, end=end_date, freq='MS')
         source_fig.update_xaxes(tickvals=all_months, tickformat="%d %b", tickmode='array')
-        source_fig.update_layout(margin=dict(l=40, r=40, t=40, b=40), legend_title_text=None)
+
+        # Add responsive horizontal legend here
+        source_fig.update_layout(
+            margin=dict(l=40, r=40, t=40, b=40),
+            legend_title_text=None,
+            legend=dict(
+                orientation="h",
+                yanchor="bottom",
+                y=1.02,
+                xanchor="center",
+                x=0.5,
+                font=dict(size=8),
+                bgcolor='rgba(255,255,255,0.7)',
+                bordercolor='LightGray',
+                borderwidth=1,
+            )
+        )
         source_fig.update_traces(hovertemplate='%{y:,}<extra></extra>')
         st.plotly_chart(source_fig, use_container_width=True)
     else:
@@ -239,7 +269,22 @@ def new_claim_analysis_page():
                 markers=True,
                 title="Injury Breakdown Over Time (% of Total Claims)"
             )
-            fig.update_layout(yaxis_tickformat=".1f", hovermode="x unified", height=500)
+            fig.update_layout(
+                yaxis_tickformat=".1f",
+                hovermode="x unified",
+                height=500,
+                legend=dict(
+                    orientation="h",
+                    yanchor="bottom",
+                    y=1.02,
+                    xanchor="center",
+                    x=0.5,
+                    font=dict(size=8),
+                    bgcolor='rgba(255,255,255,0.7)',
+                    bordercolor='LightGray',
+                    borderwidth=1,
+                )
+            )
             st.plotly_chart(fig, use_container_width=True)
         else:
             st.dataframe(
@@ -297,10 +342,40 @@ def settlement_analysis_page():
         with col1:
             fig_vol = px.line(grouped, x='year_month', y=vol_metric, color=None if combined else 'representation_status',
                               title=metric_labels[vol_metric], markers=True)
+            # Update legend for responsive horizontal layout
+            fig_vol.update_layout(
+                legend=dict(
+                    orientation="h",
+                    yanchor="bottom",
+                    y=1.02,
+                    xanchor="center",
+                    x=0.5,
+                    font=dict(size=8),
+                    bgcolor='rgba(255,255,255,0.7)',
+                    bordercolor='LightGray',
+                    borderwidth=1,
+                ),
+                margin=dict(t=40, b=40, l=40, r=40)
+            )
             st.plotly_chart(fig_vol, use_container_width=True)
         with col2:
             fig_avg = px.line(grouped, x='year_month', y=avg_metric, color=None if combined else 'representation_status',
                               title=metric_labels[avg_metric], markers=True)
+            # Update legend for responsive horizontal layout
+            fig_avg.update_layout(
+                legend=dict(
+                    orientation="h",
+                    yanchor="bottom",
+                    y=1.02,
+                    xanchor="center",
+                    x=0.5,
+                    font=dict(size=8),
+                    bgcolor='rgba(255,255,255,0.7)',
+                    bordercolor='LightGray',
+                    borderwidth=1,
+                ),
+                margin=dict(t=40, b=40, l=40, r=40)
+            )
             st.plotly_chart(fig_avg, use_container_width=True)
 
 # --- App Navigation ---
