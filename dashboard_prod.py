@@ -62,11 +62,16 @@ def render_header(page_title):
         unsafe_allow_html=True
     )
 
+
+
 # Filters UI helper
+
 def filters_ui(df):
     representation_options = sorted(df['representation_status'].unique().tolist())
     representation_options.insert(0, "Combined")
+
     filter_col1, filter_col2 = st.columns([1, 3])
+
     with filter_col1:
         selected_rep = st.multiselect(
             "Representation",
@@ -75,49 +80,84 @@ def filters_ui(df):
             help="Select one or more representation statuses. Select 'Combined' for combined totals."
         )
     combined = "Combined" in selected_rep
+
     with filter_col2:
         min_date = df['year_month'].min().date()
         max_date = df['year_month'].max().date()
-        selected_date = st.slider(
-            "Date Range",
-            min_value=min_date,
-            max_value=max_date,
-            value=(min_date, max_date),
-            format="MMM YYYY"
+
+        # Quick pick options
+        quick_pick = st.radio(
+            "Quick Date Range",
+            options=["Custom", "Last 12 months", "Last 24 months", "Last 36 months"],
+            horizontal=True,
+            index=0
         )
+
+        if quick_pick == "Custom":
+            selected_date = st.slider(
+                "Date Range",
+                min_value=min_date,
+                max_value=max_date,
+                value=(min_date, max_date),
+                format="MMM YYYY"
+            )
+        else:
+            today = pd.Timestamp(max_date)
+            if quick_pick == "Last 12 months":
+                start = (today - pd.DateOffset(months=12)).to_pydatetime().date()
+            elif quick_pick == "Last 24 months":
+                start = (today - pd.DateOffset(months=24)).to_pydatetime().date()
+            elif quick_pick == "Last 36 months":
+                start = (today - pd.DateOffset(months=36)).to_pydatetime().date()
+            else:
+                start = min_date
+
+            # Clamp start to min_date to avoid invalid ranges
+            if start < min_date:
+                start = min_date
+            selected_date = (start, max_date)
+
+            # Show slider but disabled (optional)
+            st.slider(
+                "Date Range",
+                min_value=min_date,
+                max_value=max_date,
+                value=selected_date,
+                format="MMM YYYY",
+                disabled=True,
+            )
+
     start_date = pd.to_datetime(selected_date[0]).to_period('M').to_timestamp()
     end_date = pd.to_datetime(selected_date[1]).to_period('M').to_timestamp()
     return selected_rep, combined, start_date, end_date
 
-# Multi-line plot helper with responsive horizontal legend
-def plot_multiline(df, y_col, title, start_date, end_date):
-    fig = px.line(
-        df,
-        x='year_month',
-        y=y_col,
-        color='representation_status' if 'representation_status' in df.columns else None,
-        title=title,
-        labels={'year_month': 'Date', y_col: title}
-    )
-    fig.update_layout(
-        legend_title_text='Representation Status',
-        legend=dict(
-            orientation="h",
-            yanchor="bottom",
-            y=1.02,
-            xanchor="center",
-            x=0.5,
-            font=dict(size=8),
-            bgcolor='rgba(255,255,255,0.7)',
-            bordercolor='LightGray',
-            borderwidth=1,
-        ),
-        margin=dict(t=40, b=40, l=40, r=40)
-    )
-    fig.update_xaxes(range=[start_date, end_date], constrain='domain')
-    for trace in fig.data:
-        trace.hovertemplate = '%{y:,.0f}<extra></extra>'
+
+def plot_multiline(df, y_column, title, start_date, end_date):
+    # Filter based on date range
+    filtered = df[(df['year_month'] >= start_date) & (df['year_month'] <= end_date)]
+
+    # If representation_status is a column, group by month and representation
+    if 'representation_status' in filtered.columns:
+        fig = px.line(
+            filtered,
+            x='year_month',
+            y=y_column,
+            color='representation_status',
+            title=title,
+            markers=True
+        )
+    else:
+        fig = px.line(
+            filtered,
+            x='year_month',
+            y=y_column,
+            title=title,
+            markers=True
+        )
+
+    fig.update_layout(xaxis_title="Month", yaxis_title=y_column.replace("_", " ").title())
     st.plotly_chart(fig, use_container_width=True)
+
 
 # --- Home Page ---
 def home_page():
@@ -343,8 +383,8 @@ def settlement_analysis_page():
         'avg_tariff_amount': 'Tariff Average (£)',
         'vol_non_tariff': 'Non-Tariff Volume',
         'avg_non_tariff': 'Non-Tariff Average (£)',
-        'vol_tariff_uplift': 'Tariff + Uplift Volume',
-        'avg_tariff_uplift': 'Tariff + Uplift Average (£)'
+        'vol_tariff_uplift': 'Tariff Uplift Volume',
+        'avg_tariff_uplift': 'Tariff Uplift Average (£)'
     }
     for vol_metric, avg_metric in [
         ('vol_tariff_amount', 'avg_tariff_amount'),
@@ -391,14 +431,154 @@ def settlement_analysis_page():
             )
             st.plotly_chart(fig_avg, use_container_width=True)
 
+##Lit page
+# Litigation analysis page
+def Litigation_analysis_page():
+    df = get_data()
+    render_header("Litigation Analysis")
+
+    # CSS for dropdown sizing
+    st.markdown(
+        """
+        <style>
+        div[data-baseweb="select"] {
+            max-width: 300px;
+            min-width: 150px;
+        }
+        div[data-baseweb="select"] svg {
+            width: 14px !important;
+            height: 14px !important;
+            padding: 2px !important;
+        }
+        </style>
+        """,
+        unsafe_allow_html=True,
+    )
+
+    selected_rep, combined, start_date, end_date = filters_ui(df)
+
+    st.subheader("Litigated Claims v Settlements")
+
+    if combined or len(selected_rep) == 0:
+        grouped = df.copy()
+        grouped = grouped.groupby("year_month", as_index=False).agg({
+            "settlement_volume": "sum",
+            "exit_court": "sum"
+        })
+        grouped["litigation_pct"] = grouped.apply(
+            lambda row: row["exit_court"] / (row["exit_court"] + row["settlement_volume"])
+            if (row["exit_court"] + row["settlement_volume"]) > 0 else 0,
+            axis=1
+        )
+        grouped = grouped[(grouped["year_month"] >= start_date) & (grouped["year_month"] <= end_date)]
+        grouped = grouped.set_index("year_month").reindex(
+            pd.date_range(start_date, end_date, freq="MS").to_period("M").to_timestamp(),
+            fill_value=0
+        ).rename_axis("year_month").reset_index()
+    else:
+        grouped = df[df["representation_status"].isin(selected_rep)]
+        grouped = grouped[(grouped["year_month"] >= start_date) & (grouped["year_month"] <= end_date)]
+        grouped = grouped.groupby(["year_month", "representation_status"], as_index=False).agg({
+            "settlement_volume": "sum",
+            "exit_court": "sum"
+        })
+        grouped["litigation_pct"] = grouped.apply(
+            lambda row: row["exit_court"] / (row["exit_court"] + row["settlement_volume"])
+            if (row["exit_court"] + row["settlement_volume"]) > 0 else 0,
+            axis=1
+        )
+
+        full_index = pd.MultiIndex.from_product(
+            [pd.date_range(start_date, end_date, freq="MS").to_period("M").to_timestamp(), selected_rep],
+            names=["year_month", "representation_status"]
+        )
+        grouped = grouped.set_index(["year_month", "representation_status"]).reindex(
+            full_index, fill_value=0
+        ).reset_index()
+
+    # Plotting: % of litigated claims
+    fig = px.line(
+        grouped,
+        x="year_month",
+        y="litigation_pct",
+        color=None if combined else "representation_status",
+        labels={"year_month": "Date", "litigation_pct": "Litigation %"},
+        markers=True
+    )
+    fig.update_layout(
+        yaxis_tickformat=".1%",
+        hovermode="x unified",
+        legend=dict(
+            orientation="h",
+            yanchor="bottom",
+            y=1.02,
+            xanchor="center",
+            x=0.5,
+            font=dict(size=8),
+            bgcolor='rgba(255,255,255,0.7)',
+            bordercolor='LightGray',
+            borderwidth=1,
+        ),
+        margin=dict(t=40, b=40, l=40, r=40)
+    )
+    fig.update_xaxes(range=[start_date, end_date], constrain='domain')
+    fig.update_traces(hovertemplate='%{y:.1%}<extra></extra>')
+    st.plotly_chart(fig, use_container_width=True)
+
+    # Prepare formatted string for x-axis labels in bar chart
+    grouped['year_month_str'] = grouped['year_month'].dt.strftime('%b %Y')
+
+    # Create a list of categories in chronological order
+    category_order = grouped.sort_values('year_month')['year_month_str'].unique()
+
+    # Plotting: raw litigation volume
+    st.subheader("Litigated Claim Volume Over Time")
+
+    fig_bar = px.bar(
+        grouped,
+        x="year_month_str",
+        y="exit_court",
+        color=None if combined else "representation_status",
+        barmode="group",
+        labels={"year_month_str": "Date", "exit_court": "Litigated Volume"},
+        title="Litigated Claims Volume (Monthly)",
+        color_discrete_sequence=px.colors.qualitative.Safe
+    )
+    fig_bar.update_layout(
+        hovermode="x unified",
+        legend=dict(
+            orientation="h",
+            yanchor="bottom",
+            y=1.02,
+            xanchor="center",
+            x=0.5,
+            font=dict(size=8),
+            bgcolor='rgba(255,255,255,0.7)',
+            bordercolor='LightGray',
+            borderwidth=1,
+        ),
+        margin=dict(t=40, b=40, l=40, r=40)
+    )
+    fig_bar.update_xaxes(
+        type='category',
+        categoryorder='array',
+        categoryarray=category_order
+    )
+    fig_bar.update_traces(hovertemplate='%{y:,}<extra></extra>')
+    st.plotly_chart(fig_bar, use_container_width=True)
+
+
 # --- App Navigation ---
-page = st.sidebar.radio("Select Page", ["Home", "New Claim Analysis", "Settlement Analysis"])
+page = st.sidebar.radio("Select Page", ["Home", "New Claim Analysis", "Settlement Analysis","Litigation Analysis"])
 if page == "Home":
     home_page()
 elif page == "New Claim Analysis":
     new_claim_analysis_page()
-else:
+elif page == "Settlement Analysis":
     settlement_analysis_page()
+else:
+    Litigation_analysis_page()
+    
 
 # --- Footer (shown on all pages) ---
 st.markdown("""
