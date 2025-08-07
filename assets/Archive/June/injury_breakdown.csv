@@ -324,16 +324,16 @@ year,month,year_month,injury_type,injury_group,claims_volume
 2024,September,2024-09-01,Tariff Only,Whiplash + Psychological,2460
 2024,September,2024-09-01,Tariff Only,Whiplash Only,3219
 2024,October,2024-10-01,Mixed Tariff,Multiple Injuries,1976
-2024,October,2024-10-01,Mixed Tariff,Whiplash + Physical,5292
+2024,October,2024-10-01,Mixed Tariff,Whiplash + Physical,5291
 2024,October,2024-10-01,Mixed Tariff,Whiplash + Physical + Psychological,8529
 2024,October,2024-10-01,Non Tariff,Physical + Psychological,183
 2024,October,2024-10-01,Non Tariff,Physical Only,539
 2024,October,2024-10-01,Other,Unknown,28
 2024,October,2024-10-01,Tariff Only,Whiplash + Psychological,2834
-2024,October,2024-10-01,Tariff Only,Whiplash Only,3630
+2024,October,2024-10-01,Tariff Only,Whiplash Only,3631
 2024,November,2024-11-01,Mixed Tariff,Multiple Injuries,1981
 2024,November,2024-11-01,Mixed Tariff,Whiplash + Physical,4690
-2024,November,2024-11-01,Mixed Tariff,Whiplash + Physical + Psychological,8060
+2024,November,2024-11-01,Mixed Tariff,Whiplash + Physical + Psychological,8059
 2024,November,2024-11-01,Non Tariff,Physical + Psychological,167
 2024,November,2024-11-01,Non Tariff,Physical Only,497
 2024,November,2024-11-01,Other,Unknown,25
@@ -346,60 +346,52 @@ year,month,year_month,injury_type,injury_group,claims_volume
 2024,December,2024-12-01,Non Tariff,Physical Only,415
 2024,December,2024-12-01,Other,Unknown,28
 2024,December,2024-12-01,Tariff Only,Whiplash + Psychological,2266
-2024,December,2024-12-01,Tariff Only,Whiplash Only,2812
-2025,January,2025-01-01,Mixed Tariff,Multiple Injuries,1883
-2025,January,2025-01-01,Mixed Tariff,Whiplash + Physical,4811
-2025,January,2025-01-01,Mixed Tariff,Whiplash + Physical + Psychological,8510
+2024,December,2024-12-01,Tariff Only,Whiplash Only,2811
+2025,January,2025-01-01,Mixed Tariff,Multiple Injuries,1882
+2025,January,2025-01-01,Mixed Tariff,Whiplash + Physical,4810
+2025,January,2025-01-01,Mixed Tariff,Whiplash + Physical + Psychological,8508
 2025,January,2025-01-01,Non Tariff,Physical + Psychological,215
 2025,January,2025-01-01,Non Tariff,Physical Only,479
 2025,January,2025-01-01,Other,Unknown,25
 2025,January,2025-01-01,Tariff Only,Whiplash + Psychological,2900
-2025,January,2025-01-01,Tariff Only,Whiplash Only,3485
+2025,January,2025-01-01,Tariff Only,Whiplash Only,3486
 2025,February,2025-02-01,Mixed Tariff,Multiple Injuries,1519
-2025,February,2025-02-01,Mixed Tariff,Whiplash + Physical,4132
-2025,February,2025-02-01,Mixed Tariff,Whiplash + Physical + Psychological,7446
+2025,February,2025-02-01,Mixed Tariff,Whiplash + Physical,4133
+2025,February,2025-02-01,Mixed Tariff,Whiplash + Physical + Psychological,7444
 2025,February,2025-02-01,Non Tariff,Physical + Psychological,193
 2025,February,2025-02-01,Non Tariff,Physical Only,495
 2025,February,2025-02-01,Other,Unknown,28
-2025,February,2025-02-01,Tariff Only,Whiplash + Psychological,2417
-2025,February,2025-02-01,Tariff Only,Whiplash Only,3009
+2025,February,2025-02-01,Tariff Only,Whiplash + Psychological,2415
+2025,February,2025-02-01,Tariff Only,Whiplash Only,3007
 2025,March,2025-03-01,Mixed Tariff,Multiple Injuries,1480
-2025,March,2025-03-01,Mixed Tariff,Whiplash + Physical,4285
-2025,March,2025-03-01,Mixed Tariff,Whiplash + Physical + Psychological,7516
-2025,March,2025-03-01,Non Tariff,Physical + Psychological,167
-2025,March,2025-03-01,Non Tariff,Physical Only,487
+2025,March,2025-03-01,Mixed Tariff,Whiplash + Physical,4283
+2025,March,2025-03-01,Mixed Tariff,Whiplash + Physical + Psychological,7512
+2025,March,2025-03-01,Non Tariff,Physical + Psychological,165
+2025,March,2025-03-01,Non Tariff,Physical Only,489
 2025,March,2025-03-01,Other,Unknown,28
-2025,March,2025-03-01,Tariff Only,Whiplash + Psychological,2483
-2025,March,2025-03-01,Tariff Only,Whiplash Only,3091
-2025,April,2025-04-01,Mixed Tariff,Multiple Injuries,1688
-2025,April,2025-04-01,Mixed Tariff,Whiplash + Physical,4336
-2025,April,2025-04-01,Mixed Tariff,Whiplash + Physical + Psychological,7487
+2025,March,2025-03-01,Tariff Only,Whiplash + Psychological,2482
+2025,March,2025-03-01,Tariff Only,Whiplash Only,3092
+2025,April,2025-04-01,Mixed Tariff,Multiple Injuries,1686
+2025,April,2025-04-01,Mixed Tariff,Whiplash + Physical,4335
+2025,April,2025-04-01,Mixed Tariff,Whiplash + Physical + Psychological,7481
 2025,April,2025-04-01,Non Tariff,Physical + Psychological,158
 2025,April,2025-04-01,Non Tariff,Physical Only,441
 2025,April,2025-04-01,Other,Unknown,27
 2025,April,2025-04-01,Tariff Only,Whiplash + Psychological,2463
-2025,April,2025-04-01,Tariff Only,Whiplash Only,2757
+2025,April,2025-04-01,Tariff Only,Whiplash Only,2756
 2025,May,2025-05-01,Mixed Tariff,Multiple Injuries,1778
-2025,May,2025-05-01,Mixed Tariff,Whiplash + Physical,4386
-2025,May,2025-05-01,Mixed Tariff,Whiplash + Physical + Psychological,7365
-2025,May,2025-05-01,Non Tariff,Physical + Psychological,175
-2025,May,2025-05-01,Non Tariff,Physical Only,502
+2025,May,2025-05-01,Mixed Tariff,Whiplash + Physical,4378
+2025,May,2025-05-01,Mixed Tariff,Whiplash + Physical + Psychological,7345
+2025,May,2025-05-01,Non Tariff,Physical + Psychological,174
+2025,May,2025-05-01,Non Tariff,Physical Only,500
 2025,May,2025-05-01,Other,Unknown,25
-2025,May,2025-05-01,Tariff Only,Whiplash + Psychological,2300
-2025,May,2025-05-01,Tariff Only,Whiplash Only,2935
-2025,June,2025-06-01,Mixed Tariff,Multiple Injuries,1650
-2025,June,2025-06-01,Mixed Tariff,Whiplash + Physical,4212
-2025,June,2025-06-01,Mixed Tariff,Whiplash + Physical + Psychological,7276
-2025,June,2025-06-01,Non Tariff,Physical + Psychological,177
-2025,June,2025-06-01,Non Tariff,Physical Only,476
+2025,May,2025-05-01,Tariff Only,Whiplash + Psychological,2294
+2025,May,2025-05-01,Tariff Only,Whiplash Only,2949
+2025,June,2025-06-01,Mixed Tariff,Multiple Injuries,1644
+2025,June,2025-06-01,Mixed Tariff,Whiplash + Physical,4187
+2025,June,2025-06-01,Mixed Tariff,Whiplash + Physical + Psychological,7223
+2025,June,2025-06-01,Non Tariff,Physical + Psychological,175
+2025,June,2025-06-01,Non Tariff,Physical Only,474
 2025,June,2025-06-01,Other,Unknown,32
-2025,June,2025-06-01,Tariff Only,Whiplash + Psychological,2235
-2025,June,2025-06-01,Tariff Only,Whiplash Only,3065
-2025,July,2025-07-01,Mixed Tariff,Multiple Injuries,1529
-2025,July,2025-07-01,Mixed Tariff,Whiplash + Physical,4804
-2025,July,2025-07-01,Mixed Tariff,Whiplash + Physical + Psychological,7747
-2025,July,2025-07-01,Non Tariff,Physical + Psychological,177
-2025,July,2025-07-01,Non Tariff,Physical Only,503
-2025,July,2025-07-01,Other,Unknown,22
-2025,July,2025-07-01,Tariff Only,Whiplash + Psychological,2351
-2025,July,2025-07-01,Tariff Only,Whiplash Only,3094
+2025,June,2025-06-01,Tariff Only,Whiplash + Psychological,2214
+2025,June,2025-06-01,Tariff Only,Whiplash Only,3064
