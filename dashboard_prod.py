@@ -712,6 +712,10 @@ else:
 st.markdown("""
 <hr style="margin-top: 3rem; margin-bottom: 1rem;">
 <footer style="font-size: 0.8rem; color: #666; text-align: center; padding-bottom: 1rem;">
-    Data sourced from <a href="https://www.officialinjuryclaim.org.uk/resources-for-professionals/data/" target="_blank" rel="noopener noreferrer">Official Injury Claim</a> and the Claims Portal (EL/PL/Motor) | Dashboard by <strong>InjuryIQ</strong>
+    Data sourced from 
+    <a href="https://www.officialinjuryclaim.org.uk/resources-for-professionals/data/" target="_blank" rel="noopener noreferrer">Official Injury Claim</a> 
+    and 
+    <a href="https://www.claimsportal.org.uk" target="_blank" rel="noopener noreferrer">Claims Portal (EL/PL/Motor)</a> 
+    | Dashboard by <strong>InjuryIQ</strong>
 </footer>
 """, unsafe_allow_html=True)
