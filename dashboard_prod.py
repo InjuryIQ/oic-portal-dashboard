@@ -686,7 +686,7 @@ def claims_portal_page():
         fig.update_layout(yaxis_tickformat=".0%", xaxis_title="Month", legend_title_text="Outcome")
         show_chart(fig)
 
-    #st.caption("Notes: ‘Outcome Mix’ uses portal outcomes only (settlements + exits). Court Pack is a proxy for litigation outside the portal.")
+    st.caption("Notes: ‘Outcome Mix’ uses portal outcomes only (settlements + exits). Court Pack is a proxy for litigation outside the portal.")
 
 # -------------------------------
 # NAVIGATION
