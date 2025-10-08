@@ -147,7 +147,7 @@ year,month,year_month,claims_volume,organisation_type
 2025,April,2025-04-01,13700,UK Law Firm
 2025,May,2025-05-01,4187,Alternative Business Structure
 2025,May,2025-05-01,22,Claims Management Company
-2025,May,2025-05-01,13533,UK Law Firm
+2025,May,2025-05-01,13534,UK Law Firm
 2025,June,2025-06-01,4196,Alternative Business Structure
 2025,June,2025-06-01,32,Claims Management Company
 2025,June,2025-06-01,13192,UK Law Firm
@@ -156,4 +156,7 @@ year,month,year_month,claims_volume,organisation_type
 2025,July,2025-07-01,14252,UK Law Firm
 2025,August,2025-08-01,4109,Alternative Business Structure
 2025,August,2025-08-01,20,Claims Management Company
-2025,August,2025-08-01,11732,UK Law Firm
+2025,August,2025-08-01,11734,UK Law Firm
+2025,September,2025-09-01,3831,Alternative Business Structure
+2025,September,2025-09-01,19,Claims Management Company
+2025,September,2025-09-01,13613,UK Law Firm
